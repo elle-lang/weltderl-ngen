@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Längen für Kinder</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            background-color: #f9f9f9;
+        }
+        h1 {
+            color: #2a5d9e;
+        }
+        #search-container {
+            margin-top: 50px;
+        }
+        #search {
+            padding: 10px;
+            width: 80%;
+            max-width: 400px;
+            margin-bottom: 20px;
+            border: 2px solid #2a5d9e;
+            border-radius: 5px;
+        }
+        #items {
+            display: none;
+            margin-top: 20px;
+        }
+        .container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+        .item {
+            border: 2px solid #2a5d9e;
+            border-radius: 10px;
+            padding: 15px;
+            margin: 10px;
+            background-color: white;
+            width: 330px;
+        }
+        img {
+            width: 300px;
+            height: auto;
+        }
+    </style>
+</head>
+<body>
+    <h1>Entdecke die Welt der Längen!</h1>
+    <div id="search-container">
+        <p>Suche nach einer Länge (z. B. "1m", "2m", "10m", "1cm", "1mm") und finde passende Beispiele.</p>
+        <input type="text" id="search" placeholder="Suche eine Länge...">
+    </div>
+    <div id="items" class="container">
+        <script>
+            const lengths = [
+                { length: "1mm", example: "Bleistiftspitze", img: "https://th.bing.com/th/id/OIP.DEBY7obzboXVhnjCnzWv0AHaF7?rs=1&pid=ImgDetMain" },
+                { length: "2mm", example: "Ameise", img: "https://th.bing.com/th/id/OIP.RHQ5iVgKXln1woAYI4aghwHaFB?w=264&h=180&c=7&r=0&o=5&pid=1.7" },
+                { length: "5mm", example: "Reiskorn", img: "https://th.bing.com/th/id/R.7a7a5e93ec2483410623c3b2bde15fb0?rik=2cJo6k%2fgykB%2bvQ&pid=ImgRaw&r=0" },
+                { length: "1cm", example: "1-Cent-Münze", img: "https://files.oaiusercontent.com/file-LLjJw4qHgyT8VvcyDTCoXT?se=2025-03-10T18%3A19%3A06Z&sp=r&sv=2024-08-04&sr=b&rscc=max-age%3D604800%2C%20immutable%2C%20private&rscd=attachment%3B%20filename%3D7143fd36-e93f-4d4f-b5e4-840b53d52703.webp&sig=U0vPCbD7PxOO6ATGhNcOIymdxUCF6io/5OwIb2lUHpY%3D" },
+                { length: "5cm", example: "Radiergummi", img: "https://th.bing.com/th/id/R.ff670a8eb17261a4b0e0db6a1cb2f07b?rik=zuNj1GFcS98jOg&pid=ImgRaw&r=0" },
+                { length: "15cm", example: "Lineal", img: "https://th.bing.com/th/id/OIP._JYr_dygrCOuM6hdOWiA0QHaHa?rs=1&pid=ImgDetMain" },
+                { length: "50cm", example: "Gitarrenhals", img: "https://files.oaiusercontent.com/file-Ejb2d9PsRmL8LHYtJ4LZrA?se=2025-03-10T20%3A01%3A30Z&sp=r&sv=2024-08-04&sr=b&rscc=max-age%3D604800%2C%20immutable%2C%20private&rscd=attachment%3B%20filename%3D0421a863-644a-4fcc-8301-2559deb3dbe1.webp&sig=B0zbebQ0B2yfPpvdjn6fExRhuz1P8Sxsyp7X7dmZawI%3D" },
+                { length: "1m", example: "Schrittlänge", img: "https://th.bing.com/th/id/OIP.4ilwwppIh2Unmy4hzkpDlAHaDt?rs=1&pid=ImgDetMain" },
+                { length: "2m", example: "Tür", img: "https://th.bing.com/th/id/OIP._22mHkueIdouGlC9uUhydQHaPd?w=167&h=349&c=7&r=0&o=5&pid=1.7" },
+                { length: "5m", example: "Auto", img: "https://th.bing.com/th/id/R.90a6c651ff10a4a6270a21fdf73ab2cd?rik=YSOynGotjcNdNw&pid=ImgRaw&r=0" },
+                { length: "10m", example: "Bus", img: "https://news.evearly.com/wp-content/uploads/2022/08/first-look-the-new-e-buses-for-berlin-are-arriving-at-bvg.png" },
+                { length: "25m", example: "Schwimmbecken", img: "https://files.oaiusercontent.com/file-Y7J5T9oFTxp1Na9J4AkR8h?se=2025-03-10T20%3A02%3A27Z&sp=r&sv=2024-08-04&sr=b&rscc=max-age%3D604800%2C%20immutable%2C%20private&rscd=attachment%3B%20filename%3Df1bb0b76-b1fd-43d8-9ecb-1e896ae109a7.webp&sig=0xJBesgR4OJXZ/5bwinixarMS2rPGCChQQNSySj%2BHrk%3D" },
+                { length: "50m", example: "Sprintbahn", img: "https://files.oaiusercontent.com/file-4XqJ8t8wg9CjKz2AE6Vimq?se=2025-03-10T20%3A09%3A01Z&sp=r&sv=2024-08-04&sr=b&rscc=max-age%3D604800%2C%20immutable%2C%20private&rscd=attachment%3B%20filename%3Dfb9f5e91-3d15-4e86-917b-0daf9f4e4483.webp&sig=GE3eZLmTDTIYHdquX3tcFVck/a%2Blsq%2BIzGr2dMI91yY%3D" },
+                { length: "100m", example: "Fußballfeld", img: "https://files.oaiusercontent.com/file-5CsC7Nr8PuuyfD4z5SoLj6?se=2025-03-10T20%3A04%3A12Z&sp=r&sv=2024-08-04&sr=b&rscc=max-age%3D604800%2C%20immutable%2C%20private&rscd=attachment%3B%20filename%3D7da24083-051a-4fe1-8344-e5103c96a3c2.webp&sig=8nISMr/BHcFmCjHck4bNLk9UpeX6iBUUZJtceKJOTMc%3D" },
+
+            ];
+            
+            let itemsContainer = document.getElementById("items");
+            lengths.forEach(data => {
+                let div = document.createElement("div");
+                div.classList.add("item");
+                div.setAttribute("data-length", data.length);
+                div.innerHTML = `
+                    <img src="${data.img}" alt="${data.example}">
+                    <p><strong>${data.length}</strong>: ${data.example}</p>
+                `;
+                itemsContainer.appendChild(div);
+            });
+        </script>
+    </div>
+
+    <script>
+        document.getElementById('search').addEventListener('input', function() {
+            let query = this.value.toLowerCase();
+            let items = document.querySelectorAll('.item');
+            let itemsContainer = document.getElementById('items');
+            let found = false;
+            
+            items.forEach(item => {
+                let length = item.getAttribute('data-length');
+                if (length.includes(query) || query === '') {
+                    item.style.display = 'block';
+                    found = true;
+                } else {
+                    item.style.display = 'none';
+                }
+            });
+            
+            itemsContainer.style.display = found ? 'block' : 'none';
+        });
+    </script>
+</body>
+</html>
